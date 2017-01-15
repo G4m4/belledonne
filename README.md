@@ -35,6 +35,10 @@ Tests projects can be built by adding the proper option:
 
     cmake -DBUILD_TEST=ON ../
 
+The VSIX project for the MSVC plugin wrapper can be referenced by the generated solution by adding the proper option as well:
+
+    cmake -DBUILD_VSIX=ON ../
+
 License
 ==================================
 Belledonne is under GPLv3.

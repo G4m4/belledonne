@@ -185,7 +185,7 @@ endfunction(set_target_platformtoolset)
 option(BUILD_TEST "Use GTest framework." OFF)
 message(STATUS "GTest framework: ${BUILD_TEST}")
 
-if(COMPILER_IS_MSVC)
+if(SYSTEM_IS_WINDOWS)
 option(BUILD_VSIX "Use Visual Studio SDK." OFF)
 message(STATUS "Visual Studio SDK: ${BUILD_VSIX}")
 endif()
