@@ -1,0 +1,18 @@
+file(GLOB
+     BELLEDONNE_TOOLS_SRC
+     *.cc
+)
+file(GLOB
+     BELLEDONNE_TOOLS_HDR
+     *.h
+)
+
+# Expose variables to parent CMake files
+set(BELLEDONNE_TOOLS_SRC
+    ${BELLEDONNE_TOOLS_SRC}
+    PARENT_SCOPE
+)
+set(BELLEDONNE_TOOLS_HDR
+    ${BELLEDONNE_TOOLS_HDR}
+    PARENT_SCOPE
+)

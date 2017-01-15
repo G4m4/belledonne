@@ -1,0 +1,74 @@
+# @brief Manually build lmdb
+
+# preventing warnings from external source files
+include_directories(
+  SYSTEM
+)
+
+set(LIBLMDB_DIR
+  ${CMAKE_CURRENT_SOURCE_DIR}/externals/liblmdb/libraries/liblmdb
+)
+
+include_directories(
+  ${LIBLMDB_DIR}
+)
+
+# Expose variables to parent CMake files
+# no scope required as the current file is included in main CMake file
+set(LIBLMDB_INCLUDE_DIR
+  ${LIBLMDB_DIR}
+)
+set(LMDB_LIBRARIES
+  liblmdb
+)
+
+# Source files
+set(LIBLMDB_MDB_SRC
+  ${LIBLMDB_DIR}/mdb.c
+  ${LIBLMDB_DIR}/midl.c
+)
+set(LIBLMDB_MDB_HDR
+  ${LIBLMDB_DIR}/mdb.h
+  ${LIBLMDB_DIR}/midl.h
+)
+
+source_group("mdb"
+  FILES
+  ${LIBLMDB_MDB_SRC}
+  ${LIBLMDB_MDB_HDR}
+)
+source_group("tools"
+  FILES
+  ${BELLEDONNE_TESTS_TOOLS_SRC}
+)
+
+# Target
+
+add_library(liblmdb
+  ${LIBLMDB_MDB_SRC}
+)
+set_target_mt(liblmdb)
+# Disable warnings for this target
+add_compiler_flags(liblmdb " -w")
+
+# Legacy, to be deleted in next submit
+# if (COMPILER_IS_MSVC)
+# # No SafeSEH due to lmdb
+# add_linker_flags(liblmdb -SAFESEH:NO)
+# endif (COMPILER_IS_MSVC)
+
+# if (MSVC AND MSVC_VERSION VERSION_GREATER 1800)
+  # # Fixes linker issue with _sprintf due to VS2015 changes
+  # # see http://stackoverflow.com/questions/32418766/c-unresolved-external-symbol-sprintf-and-sscanf-in-visual-studio-2015
+  # set(MSVC_HACK_LIBS
+      # legacy_stdio_definitions.lib
+  # )
+# endif()
+
+# We have to use the v12 of the compiler for now,
+# Due to external libraries compiled by the outdated Mingw
+# if (COMPILER_IS_MSVC)
+  # if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 1800 )
+    # set_target_platformtoolset(liblmdb "v120")
+  # endif()
+# endif (COMPILER_IS_MSVC)

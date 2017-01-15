@@ -1,0 +1,18 @@
+file(GLOB
+     BELLEDONNE_DATABASE_SRC
+     *.cc
+)
+file(GLOB
+     BELLEDONNE_DATABASE_HDR
+     *.h
+)
+
+# Expose variables to parent CMake files
+set(BELLEDONNE_DATABASE_SRC
+    ${BELLEDONNE_DATABASE_SRC}
+    PARENT_SCOPE
+)
+set(BELLEDONNE_DATABASE_HDR
+    ${BELLEDONNE_DATABASE_HDR}
+    PARENT_SCOPE
+)
